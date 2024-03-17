@@ -20,13 +20,14 @@ public class StatementPrinter {
     }
 
     String print() {
-        var result = String.format("Statement for %s\n", invoice.customer);
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Statement for %s%n", invoice.customer));
         for (var perf : invoice.performances) {
-            result += String.format("  %s: %s (%s seats)\n", playFor(perf).name, usdFormat(amountFor(perf) / 100), perf.audience);
+            sb.append(String.format("  %s: %s (%s seats)%n", playFor(perf).name, usdFormat(amountFor(perf) / 100), perf.audience));
         }
-        result += String.format("Amount owed is %s\n", usdFormat(totalAmount() / 100));
-        result += String.format("You earned %s credits\n", totalVolumeCredits());
-        return result;
+        sb.append(String.format("Amount owed is %s%n", usdFormat(totalAmount() / 100)));
+        sb.append(String.format("You earned %s credits%n", totalVolumeCredits()));
+        return sb.toString();
     }
 
     private String usdFormat(int number) {
@@ -79,7 +80,7 @@ public class StatementPrinter {
     private int volumeCreditsFor(Performance perf) {
         int result = Math.max(perf.audience - 30, 0);
         // add extra credit for every ten comedy attendees
-        if ("comedy".equals(playFor(perf).type)) result += Math.floor(perf.audience / 5);
+        if ("comedy".equals(playFor(perf).type)) result += perf.audience / 5;
         return result;
     }
 

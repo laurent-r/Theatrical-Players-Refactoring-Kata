@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static org.approvaltests.Approvals.verify;
 
-public class StatementPrinterTests {
+class StatementPrinterTests {
 
     @Test
     void exampleStatement() {
