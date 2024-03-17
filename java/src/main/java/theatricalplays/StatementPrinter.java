@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class StatementPrinter {
 
-    private Invoice invoice;
-    private Map<String, Play> plays;
+    private final Invoice invoice;
+    private final Map<String, Play> plays;
 
     StatementPrinter(Invoice invoice, Map<String, Play> plays) {
         this.invoice = invoice;
