@@ -19,7 +19,7 @@ public class StatementData {
         totalVolumeCredits = performances.stream().mapToInt(p -> p.volumeCredits).sum();
     }
 
-    class PerformanceData {
+    static class PerformanceData {
         final String name;
         final String type;
         final int audience;
