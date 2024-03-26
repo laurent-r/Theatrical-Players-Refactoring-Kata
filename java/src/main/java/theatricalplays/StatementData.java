@@ -51,7 +51,7 @@ public class StatementData {
                     result += 300 * audience;
                     break;
                 default:
-                    throw new Error("unknown type: ${type}");
+                    throw new Error("Unknown type: " + type);
             }
             return result;
         }
