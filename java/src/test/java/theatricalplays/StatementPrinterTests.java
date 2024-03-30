@@ -51,6 +51,6 @@ class StatementPrinterTests {
                 new Performance("henry-v", 53),
                 new Performance("as-like", 55)));
 
-        Assertions.assertThrows(Error.class, () -> new StatementData(invoice, plays));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new StatementData(invoice, plays));
     }
 }

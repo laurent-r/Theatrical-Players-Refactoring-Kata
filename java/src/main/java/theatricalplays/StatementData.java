@@ -20,47 +20,47 @@ public class StatementData {
     }
 
     static class PerformanceData {
-        final String name;
-        final String type;
+        final String playName;
+        final String playType;
         final int audience;
         final int amount;
         final int volumeCredits;
 
         PerformanceData(Play play, int audience) {
-            this.name = play.name;
-            this.type = play.type;
+            this.playName = play.name;
+            this.playType = play.type;
             this.audience = audience;
-            this.amount = evalAmount();
-            this.volumeCredits = evalVolumeCredits();
+            this.amount = calculateAmount();
+            this.volumeCredits = calculateVolumeCredits();
         }
 
-        private int evalAmount() {
-            int result;
-            switch (type) {
+        private int calculateAmount() {
+            int amount;
+            switch (playType) {
                 case "tragedy":
-                    result = 40000;
+                    amount = 40000;
                     if (audience > 30) {
-                        result += 1000 * (audience - 30);
+                        amount += 1000 * (audience - 30);
                     }
                     break;
                 case "comedy":
-                    result = 30000;
+                    amount = 30000;
                     if (audience > 20) {
-                        result += 10000 + 500 * (audience - 20);
+                        amount += 10000 + 500 * (audience - 20);
                     }
-                    result += 300 * audience;
+                    amount += 300 * audience;
                     break;
                 default:
-                    throw new Error("Unknown type: " + type);
+                    throw new IllegalArgumentException("unknown type: " + playType);
             }
-            return result;
+            return amount;
         }
 
-        private int evalVolumeCredits() {
-            int result = Math.max(audience - 30, 0);
+        private int calculateVolumeCredits() {
+            int volumeCredits = Math.max(audience - 30, 0);
             // add extra credit for every ten comedy attendees
-            if ("comedy".equals(type)) result += audience / 5;
-            return result;
+            if ("comedy".equals(playType)) volumeCredits += audience / 5;
+            return volumeCredits;
         }
 
     }
