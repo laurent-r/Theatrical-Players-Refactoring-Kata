@@ -11,9 +11,9 @@ public class StatementData {
     final int totalVolumeCredits;
 
     StatementData(Invoice invoice, Map<String, Play> plays) {
-        customer = invoice.customer;
-        performances = invoice.performances.stream()
-                .map(perf -> new PerformanceData(plays.get(perf.playID), perf.audience))
+        customer = invoice.customer();
+        performances = invoice.performances().stream()
+                .map(perf -> new PerformanceData(plays.get(perf.playID()), perf.audience()))
                 .toList();
         totalAmount = performances.stream().mapToInt(p -> p.amount).sum();
         totalVolumeCredits = performances.stream().mapToInt(p -> p.volumeCredits).sum();
@@ -27,8 +27,8 @@ public class StatementData {
         final int volumeCredits;
 
         PerformanceData(Play play, int audience) {
-            this.playName = play.name;
-            this.playType = play.type;
+            this.playName = play.name();
+            this.playType = play.type();
             this.audience = audience;
             this.amount = calculateAmount();
             this.volumeCredits = calculateVolumeCredits();
