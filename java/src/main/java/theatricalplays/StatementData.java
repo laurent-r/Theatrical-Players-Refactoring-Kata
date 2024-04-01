@@ -3,6 +3,8 @@ package theatricalplays;
 import java.util.List;
 import java.util.Map;
 
+import static theatricalplays.Play.Type.COMEDY;
+
 public class StatementData {
 
     final String customer;
@@ -21,7 +23,7 @@ public class StatementData {
 
     static class PerformanceData {
         final String playName;
-        final String playType;
+        final Play.Type playType;
         final int audience;
         final int amount;
         final int volumeCredits;
@@ -37,29 +39,28 @@ public class StatementData {
         private int calculateAmount() {
             int amount;
             switch (playType) {
-                case "tragedy":
+                case TRAGEDY:
                     amount = 40000;
                     if (audience > 30) {
                         amount += 1000 * (audience - 30);
                     }
-                    break;
-                case "comedy":
+                    return amount;
+                case COMEDY:
                     amount = 30000;
                     if (audience > 20) {
                         amount += 10000 + 500 * (audience - 20);
                     }
                     amount += 300 * audience;
-                    break;
+                    return amount;
                 default:
                     throw new IllegalArgumentException("unknown type: " + playType);
             }
-            return amount;
         }
 
         private int calculateVolumeCredits() {
             int volumeCredits = Math.max(audience - 30, 0);
             // add extra credit for every ten comedy attendees
-            if ("comedy".equals(playType)) volumeCredits += audience / 5;
+            if (playType==COMEDY) volumeCredits += audience / 5;
             return volumeCredits;
         }
 
