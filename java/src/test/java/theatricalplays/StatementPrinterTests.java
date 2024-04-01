@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.approvaltests.Approvals.verify;
-import static theatricalplays.Play.Type.COMEDY;
-import static theatricalplays.Play.Type.TRAGEDY;
+import static theatricalplays.Play.Type.*;
 
 class StatementPrinterTests {
 
@@ -41,5 +40,18 @@ class StatementPrinterTests {
         var result = StatementPrinter.htmlStatement(invoice, plays);
 
         verify(result);
+    }
+
+    @Test
+    void statementWithNewPlayTypes() {
+        plays = Map.of(
+                "hamlet",  new Play("Hamlet", TRAGEDY),
+                "as-like", new Play("As You Like It", WESTERN));
+
+        invoice = new Invoice("BigCo", List.of(
+                new Performance("hamlet", 53),
+                new Performance("as-like", 55)));
+
+        Assertions.assertThrows(Exception.class, () -> new StatementData(invoice, plays));
     }
 }
