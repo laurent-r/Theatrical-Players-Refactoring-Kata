@@ -5,11 +5,10 @@ public record Play(String name, Type type) {
     public static Play create(String name, String type) {
         return new Play(name, Type.valueOf(type.toUpperCase()));
     }
-}
 
     enum Type {
-        COMEDY(new ComedyAmountStrategy(), new ComedyCreditsStrategy()),
-        TRAGEDY(new TragedyAmountStrategy(), new CreditsStrategy());
+        COMEDY(new AmountStrategy.Comedy(), new CreditsStrategy.Comedy()),
+        TRAGEDY(new AmountStrategy.Tragedy(), new CreditsStrategy());
 
         private final AmountStrategy amountStrategy;
         private final CreditsStrategy creditsStrategy;
@@ -27,4 +26,6 @@ public record Play(String name, Type type) {
             return creditsStrategy.calculate(audience);
         }
     }
+
+}
 
