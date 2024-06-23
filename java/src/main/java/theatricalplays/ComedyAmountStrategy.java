@@ -1,13 +1,19 @@
 package theatricalplays;
 
-class ComedyAmountStrategy implements AmountStrategy {
+class ComedyAmountStrategy extends AmountStrategy {
 
     @Override
-    public int calculate(int audience) {
-        int amount = 30000 + 300 * audience;
-        if (audience > 20) {
-            amount += 10000 + 500 * (audience - 20);
-        }
-        return amount;
+    protected int baseAmount(int audience) {
+        return 30000 + 300 * audience;
+    }
+
+    @Override
+    protected int audienceThreshold() {
+        return 20;
+    }
+
+    @Override
+    protected int extraAmount(int audience) {
+        return 10000 + 500 * (audience - audienceThreshold());
     }
 }
