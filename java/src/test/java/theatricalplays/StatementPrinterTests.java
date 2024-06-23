@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.approvaltests.Approvals.verify;
-import static theatricalplays.Play.Type.*;
 
 class StatementPrinterTests {
 
@@ -18,9 +17,9 @@ class StatementPrinterTests {
     @BeforeEach
     public void setup() {
         plays = Map.of(
-                "hamlet",  new Play("Hamlet", TRAGEDY),
-                "as-like", new Play("As You Like It", COMEDY),
-                "othello", new Play("Othello", TRAGEDY));
+                "hamlet",  Play.create("Hamlet", "tragedy"),
+                "as-like", Play.create("As You Like It", "comedy"),
+                "othello", Play.create("Othello", "tragedy"));
 
         invoice = new Invoice("BigCo", List.of(
                 new Performance("hamlet", 55),
@@ -43,15 +42,7 @@ class StatementPrinterTests {
     }
 
     @Test
-    void statementWithNewPlayTypes() {
-        plays = Map.of(
-                "hamlet",  new Play("Hamlet", TRAGEDY),
-                "as-like", new Play("As You Like It", WESTERN));
-
-        invoice = new Invoice("BigCo", List.of(
-                new Performance("hamlet", 53),
-                new Performance("as-like", 55)));
-
-        Assertions.assertThrows(Exception.class, () -> new StatementData(invoice, plays));
+    void unknownPlayType() {
+        Assertions.assertThrows(Exception.class, () -> Play.create("As You Like It", "pastoral"));
     }
 }
